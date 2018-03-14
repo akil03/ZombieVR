@@ -12,7 +12,7 @@ public class SpawnManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		InvokeRepeating ("SpawnZombie", 0.5f, 2f);
+		InvokeRepeating ("SpawnZombie", 0.5f, 5f);
 
 	}
 	
