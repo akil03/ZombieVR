@@ -7,7 +7,10 @@ using UnityEngine.SceneManagement;
 public class ZombieBehaviour : MonoBehaviour {
 
 	public float moveTime;
+	public float ZombieHealth = 99f;
 	public Animator _animator;
+	public GameObject child;
+
 	// Use this for initialization
 	void Start () {
 
@@ -18,9 +21,11 @@ public class ZombieBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-
-		//gameObject.transform.Translate (Vector3.forward * moveSpeed * Time.deltaTime);
+//		if (CombatControl.instance.isHit) {
+//			
+//			_animator.Play ("Death");
+//			CombatControl.instance.isHit = false;
+//		}
 	}
 
 	public void Movement(){
@@ -28,6 +33,17 @@ public class ZombieBehaviour : MonoBehaviour {
 			_animator.Play ("Attack");
 			Invoke("ReloadLevel", 7f);
 		});
+	}
+
+	public void AdjustHealth(float health){
+		ZombieHealth = ZombieHealth - health;
+		if (ZombieHealth <= 0f) {
+			_animator.Play ("Death");
+			CancelInvoke ();
+			child.transform.SetParent (null);
+			CombatControl.instance.DestroyEnemy ();
+			Destroy (child, 2f);
+		}
 	}
 
 	public void ReloadLevel(){
