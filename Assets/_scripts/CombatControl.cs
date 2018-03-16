@@ -8,6 +8,7 @@ public class CombatControl : MonoBehaviour {
 	public bool isSecondHit;
 	public bool isThirdHit;
 	RaycastHit hit;
+	public GameObject impactPrefab;
 
 	public static CombatControl instance;
 
@@ -35,6 +36,8 @@ public class CombatControl : MonoBehaviour {
 					//isSecondHit = false;
 					ZombieBehaviour ZB =  hit.collider.gameObject.GetComponent<ZombieBehaviour> ();
 					ZB.AdjustHealth (33f);
+					GameObject particle = Instantiate(impactPrefab, hit.point, Quaternion.identity);
+					Destroy(particle, 2f);
 					StartCoroutine(ShootInterval());
 				}
 

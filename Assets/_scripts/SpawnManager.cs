@@ -9,7 +9,13 @@ public class SpawnManager : MonoBehaviour {
 	public GameObject Clone;
 	public bool isSpawn;
 	int index, oldIndex;
+	public CameraShake2.Properties prop;
+
+	public static SpawnManager instance;
 	// Use this for initialization
+	void Awake(){
+		instance = this;
+	}
 	void Start () {
 
 		InvokeRepeating ("SpawnZombie", 0.5f, 5f);

@@ -14,7 +14,7 @@ public class CameraShake2 : MonoBehaviour {
 	}
 
 	public void StartShake(Properties properties) {
-		return;
+		//return;
 
 		if (currentShakeCoroutine != null) {
 			StopCoroutine (currentShakeCoroutine);
@@ -29,8 +29,8 @@ public class CameraShake2 : MonoBehaviour {
 		float movePercent = 0;
 
 		float angle_radians = properties.angle * Mathf.Deg2Rad - Mathf.PI;
-		Vector3 previousWaypoint = Vector3.zero;
-		Vector3 currentWaypoint = Vector3.zero;
+		Vector3 previousWaypoint = transform.localPosition;
+		Vector3 currentWaypoint = transform.localPosition;
 		float moveDistance = 0;
 		float speed = 0;
 

@@ -10,31 +10,28 @@ public class ZombieBehaviour : MonoBehaviour {
 	public float ZombieHealth = 99f;
 	public Animator _animator;
 	public GameObject child;
-	public CameraShake2.Properties prop;
+
 
 	void Start () {
 		gameObject.transform.LookAt (Camera.main.transform);
+		//CameraShake2.instance.StartShake(SpawnManager.instance.prop);
 		Movement ();
 		//moveSpeed = Random.Range (0.1f, 1.3f);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-//		if (CombatControl.instance.isHit) {
-//			
-//			_animator.Play ("Death");
-//			CombatControl.instance.isHit = false;
-//		}
+
 	}
 
 	public void Movement(){
-		ZombieNoises.instance.isMove = true;
+		ZombieNoises.instance.isWalk = true;
 		transform.DOMove (Camera.main.transform.position, moveTime, false).SetEase(Ease.Linear).OnComplete (() => {
 			_animator.Play ("Attack");
-			CameraShake2.instance.StartShake(prop);
-			ZombieNoises.instance.isMove = false;
+			CameraShake2.instance.StartShake(SpawnManager.instance.prop);
+			ZombieNoises.instance.isWalk = false;
 			ZombieNoises.instance.isAttack = true;
-			InvokeRepeating("ShakeCam", 0.1f, 0.1f);
+			//InvokeRepeating("ShakeCam", 0.01f, 0.8f);
 			Invoke("ReloadLevel", 10f);
 		});
 	}
@@ -43,12 +40,14 @@ public class ZombieBehaviour : MonoBehaviour {
 		ZombieHealth = ZombieHealth - health;
 		if (ZombieHealth <= 0f) {
 			_animator.Play ("Death");
-			ZombieNoises.instance.isAttack = false;
+			//ZombieNoises.instance.isAttack = false;
+			ZombieNoises.instance.StopAllCoroutines ();
+			ZombieNoises.instance.isAudio = false;
 			CancelInvoke ();
 			child.transform.SetParent (null);
 			CombatControl.instance.DestroyEnemy ();
 			Destroy (child, 2f);
-//			CameraShake.instance.shakeDuration = 0f;
+			//CameraShake.instance.shakeDuration = 0f;
 		}
 	}
 

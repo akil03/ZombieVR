@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class ZombieNoises : MonoBehaviour {
 
-	public bool isMove;
+	public bool isWalk;
 	public bool isAttack;
-	bool isAudio;
-	public List<AudioClip> ZombieSounds;
+	public bool isAudio;
+	//public List<AudioClip> ZombieSounds;
+	public AudioClip walkNoise;
+	public AudioClip attackNoise;
 	AudioSource aud;
 
 	public static ZombieNoises instance;
@@ -25,19 +27,33 @@ public class ZombieNoises : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (!isAudio) {
-			if (isMove && !isAttack) {
-				StartCoroutine (ZombieSound ());
+			if (isWalk && !isAttack) {
+				StartCoroutine (ZombieWalk ());
 			}
 		}
 	}
 
-	IEnumerator ZombieSound(){
+	IEnumerator ZombieWalk(){
 		while (true) {
 			isAudio = true;
-			int index = Random.Range (0, ZombieSounds.Count);
-			aud.PlayOneShot (ZombieSounds [index]);
+			if (isAttack) {
+				StartCoroutine (ZombieAttack ());
+			}
+			//int index = Random.Range (0, ZombieSounds.Count);
+			//aud.PlayOneShot (ZombieSounds [index]);
+			aud.PlayOneShot(walkNoise);
 			yield return new WaitForSeconds (3f);
 		}
-		StartCoroutine (ZombieSound ());
+		StartCoroutine (ZombieWalk ());
+
+	}
+
+	IEnumerator ZombieAttack(){
+		while (true) {
+			isAudio = true;
+			aud.PlayOneShot (attackNoise);
+			yield return new WaitForSeconds (0.8f);
+		}
+		StartCoroutine (ZombieAttack ());
 	}
 }
