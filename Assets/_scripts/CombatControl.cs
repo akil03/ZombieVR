@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class CombatControl : MonoBehaviour {
 
-	public bool isHit;
+	public bool isHit = false;
+	public bool isSecondHit;
+	public bool isThirdHit;
 	RaycastHit hit;
 
 	public static CombatControl instance;
@@ -24,14 +26,38 @@ public class CombatControl : MonoBehaviour {
 
 	public void GunRay(){
 		
-		Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width/4, Screen.height/2, 0));
+		Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2, 0));
 		if(Physics.Raycast(ray, out hit,10f)){
 			//Debug.Log ("Collision");
 			if (hit.collider.tag == "Zombie") {
-				//isHit = true;
-				//Destroy (hit.transform.gameObject,1f);
-				ZombieBehaviour ZB =  hit.collider.gameObject.GetComponent<ZombieBehaviour> ();
-				ZB.AdjustHealth (33f);					
+				if (!isHit) {
+					isHit = true;
+					//isSecondHit = false;
+					ZombieBehaviour ZB =  hit.collider.gameObject.GetComponent<ZombieBehaviour> ();
+					ZB.AdjustHealth (33f);
+					StartCoroutine(ShootInterval());
+				}
+
+
+//				if (isHit && !isSecondHit) {
+//					GunMechanics.instance.Shoot ();
+//					isSecondHit = true;
+//					isThirdHit = false;
+//					ZombieBehaviour ZB =  hit.collider.gameObject.GetComponent<ZombieBehaviour> ();
+//					ZB.AdjustHealth (33f);
+//					Invoke ("HitInterval", 1f);
+//				}
+//				if (isHit && isSecondHit && !isThirdHit) {
+//					GunMechanics.instance.Shoot ();
+//					isThirdHit = true;
+//					isHit = false;
+//					ZombieBehaviour ZB =  hit.collider.gameObject.GetComponent<ZombieBehaviour> ();
+//					ZB.AdjustHealth (33f);
+//				}
+//				Invoke ("HitInterval", 1f);
+//				if (!isHit)
+//					CancelInvoke ();
+									
 				//print (hit.collider.name);					
 			}
 		}
@@ -39,5 +65,16 @@ public class CombatControl : MonoBehaviour {
 
 	public void DestroyEnemy(){
 		Destroy (hit.transform.gameObject);
+		StopCoroutine (ShootInterval ());
+	}
+
+	public void HitInterval(){
+		isHit = false;
+	}
+
+	public IEnumerator ShootInterval(){
+		GunMechanics.instance.Shoot ();
+		yield return new WaitForSeconds (1f);
+		isHit = false;
 	}
 }

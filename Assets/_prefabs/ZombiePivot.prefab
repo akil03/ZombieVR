@@ -389,6 +389,7 @@ GameObject:
   - component: {fileID: 4001918588127686}
   - component: {fileID: 114876696760830650}
   - component: {fileID: 65878837493614036}
+  - component: {fileID: 82344575820480724}
   m_Layer: 0
   m_Name: ZombiePivot
   m_TagString: Zombie
@@ -1378,6 +1379,86 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0566167, y: 2.377685, z: 1.2701225}
   m_Center: {x: -0.014346421, y: -0.27547717, z: -3.206049}
+--- !u!82 &82344575820480724
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1653534509944134}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95172526946061304
 Animator:
   serializedVersion: 3
@@ -1410,6 +1491,15 @@ MonoBehaviour:
   ZombieHealth: 99
   _animator: {fileID: 95172526946061304}
   child: {fileID: 1848614970649832}
+  prop:
+    angle: 90
+    strength: 5
+    maxSpeed: 10
+    minSpeed: 5
+    duration: 5
+    noisePercent: 0.214
+    dampingPercent: 0.272
+    rotationPercent: 0.206
 --- !u!137 &137076873446559872
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
