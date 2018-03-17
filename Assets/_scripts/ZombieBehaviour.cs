@@ -16,13 +16,13 @@ public class ZombieBehaviour : MonoBehaviour {
 	public AudioClip moveSound,AttackSound,selectedSound;
 
 	void Start () {
-		_audioSource = GetComponent<AudioSource> ();
+		_audioSource = GetComponentInChildren<AudioSource> ();
 
 		gameObject.transform.LookAt (Camera.main.transform);
 		//CameraShake2.instance.StartShake(SpawnManager.instance.prop);
-		Invoke("PlaySound",Random.Range(2,4));
+		Invoke("PlaySound",3);
 		Movement ();
-		//InvokeRepeating ("PlaySound", 0, 3);
+		Destroy (gameObject, 40f);
 
 		//moveSpeed = Random.Range (0.1f, 1.3f);
 	}
@@ -48,6 +48,7 @@ public class ZombieBehaviour : MonoBehaviour {
 	}
 
 	public void AdjustHealth(float health){
+		
 		ZombieHealth = ZombieHealth - health;
 		if (ZombieHealth <= 0f) {
 			_animator.Play ("Death");
@@ -69,8 +70,9 @@ public class ZombieBehaviour : MonoBehaviour {
 		_audioSource.clip = selectedSound;
 		_audioSource.Play ();
 		if (isWalk)
-			Invoke("PlaySound",Random.Range(2,4));
-		if(isAttack)
+			_audioSource.loop = true;
+		if (isAttack)
+			_audioSource.loop = false;
 			Invoke("PlaySound",1);
 	}
 

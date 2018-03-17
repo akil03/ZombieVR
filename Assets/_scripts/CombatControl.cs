@@ -9,6 +9,7 @@ public class CombatControl : MonoBehaviour {
 	public bool isThirdHit;
 	RaycastHit hit;
 	public GameObject impactPrefab;
+	//BoxCollider _collider;
 
 	public static CombatControl instance;
 
@@ -34,13 +35,12 @@ public class CombatControl : MonoBehaviour {
 				if (!isHit) {
 					isHit = true;
 					//isSecondHit = false;
-					ZombieBehaviour ZB =  hit.collider.gameObject.GetComponent<ZombieBehaviour> ();
-					ZB.AdjustHealth (33f);
 					GameObject particle = Instantiate(impactPrefab, hit.point, Quaternion.identity);
 					Destroy(particle, 2f);
+					ZombieBehaviour ZB =  hit.collider.gameObject.GetComponent<ZombieBehaviour> ();
+					ZB.AdjustHealth (33f);
 					StartCoroutine(ShootInterval());
 				}
-
 
 //				if (isHit && !isSecondHit) {
 //					GunMechanics.instance.Shoot ();
@@ -62,6 +62,18 @@ public class CombatControl : MonoBehaviour {
 //					CancelInvoke ();
 									
 				//print (hit.collider.name);					
+			}
+			if (hit.collider.tag == "ZombieHead") {
+				if (!isHit) {
+					isHit = true;
+					GameObject particle = Instantiate(impactPrefab, hit.point, Quaternion.identity);
+					Destroy(particle, 2f);
+					ZombieBehaviour ZB = hit.collider.gameObject.GetComponentInParent<ZombieBehaviour> ();
+					ZB.AdjustHealth (99f);
+					//_collider = hit.collider.GetComponentInParent<BoxCollider> ();
+					ZB.gameObject.SetActive (false);
+					StartCoroutine(ShootInterval());
+				}
 			}
 		}
 	}
