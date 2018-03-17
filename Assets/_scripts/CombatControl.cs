@@ -27,7 +27,7 @@ public class CombatControl : MonoBehaviour {
 
 	public void GunRay(){
 		
-		Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2, 0));
+		Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width/4, Screen.height/2, 0));
 		if(Physics.Raycast(ray, out hit,10f)){
 			//Debug.Log ("Collision");
 			if (hit.collider.tag == "Zombie") {

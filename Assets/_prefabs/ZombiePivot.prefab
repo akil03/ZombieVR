@@ -1390,16 +1390,16 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.209
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 62
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 20
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -1428,7 +1428,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 2
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1440,7 +1440,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 2
       time: 0
-      value: 0
+      value: 0.41111112
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1452,7 +1452,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 2
       time: 0
-      value: 1
+      value: 0.769
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1491,15 +1491,10 @@ MonoBehaviour:
   ZombieHealth: 99
   _animator: {fileID: 95172526946061304}
   child: {fileID: 1848614970649832}
-  prop:
-    angle: 90
-    strength: 5
-    maxSpeed: 10
-    minSpeed: 5
-    duration: 5
-    noisePercent: 0.214
-    dampingPercent: 0.272
-    rotationPercent: 0.206
+  _audioSource: {fileID: 82344575820480724}
+  moveSound: {fileID: 8300000, guid: 5efd9f8b69db1463e89bdb8268b82bcc, type: 3}
+  AttackSound: {fileID: 8300000, guid: 5824d54a59e6640ddafa3f0d0bfc086b, type: 3}
+  selectedSound: {fileID: 0}
 --- !u!137 &137076873446559872
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
