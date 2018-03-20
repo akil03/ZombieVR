@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UIManager : MonoBehaviour {
 
@@ -11,6 +12,8 @@ public class UIManager : MonoBehaviour {
 	public int count= 0;
 	public Text highscoreText;
 	public int highscore;
+	public Text gameoverText;
+	public Image bloodSplat;
 
 	public static UIManager instance;
 	// Use this for initialization

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Zombie
   - ZombieHead
+  - ZombieMesh
   layers:
   - Default
   - TransparentFX

@@ -7,7 +7,13 @@ public class AudioManager : MonoBehaviour {
 	public List<AudioClip> BGSound;
 	public AudioClip tempClip;
 	bool isStart = true;
+
+	public static AudioManager instance;
 //	public List<AudioClip> ReserveSound;
+
+	void Awake(){
+		instance = this;
+	}
 
 	void Start () {
 		
@@ -55,7 +61,7 @@ public class AudioManager : MonoBehaviour {
 		GetComponent<AudioSource> ().PlayOneShot (BGSound[index],0.5f);
 		tempClip = BGSound [index];
 		BGSound.RemoveAt (index);
-		yield return new WaitForSeconds (tempClip.length + 3f);
+		yield return new WaitForSeconds (tempClip.length + 6f);
 
 		isStart = false;
 		StartCoroutine (PlaySound ());

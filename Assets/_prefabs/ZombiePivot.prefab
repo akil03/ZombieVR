@@ -406,7 +406,7 @@ GameObject:
   - component: {fileID: 95172526946061304}
   m_Layer: 0
   m_Name: ZombiePrefab
-  m_TagString: Untagged
+  m_TagString: ZombieMesh
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1564,7 +1564,8 @@ MonoBehaviour:
   child: {fileID: 1637124280646844}
   _audioSource: {fileID: 0}
   moveSound: {fileID: 8300000, guid: 30f2b1f1b58b7455cbcea3dba9f81d2f, type: 3}
-  AttackSound: {fileID: 8300000, guid: 5824d54a59e6640ddafa3f0d0bfc086b, type: 3}
+  AttackSound: {fileID: 8300000, guid: aea2cc900307f4f37aa611c50aab5d42, type: 3}
+  playerDeathsound: {fileID: 8300000, guid: fd65744552ad14524b9b80028b0f2cf0, type: 3}
   selectedSound: {fileID: 0}
 --- !u!137 &137076873446559872
 SkinnedMeshRenderer:
