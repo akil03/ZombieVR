@@ -51,7 +51,7 @@ public class AudioManager : MonoBehaviour {
 	int index;
 	IEnumerator PlaySound(){
 		if (isStart)
-			yield return new WaitForSeconds (5f);
+			yield return new WaitForSeconds (10f);
 
 		while (tempClip != null) {
 			BGSound.Add (tempClip);

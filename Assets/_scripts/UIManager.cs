@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour {
 	public int highscore;
 	public Text gameoverText;
 	public Image bloodSplat;
+	public List<Text> WaveNoText;
+	public Text surviveText;
 
 	public static UIManager instance;
 	// Use this for initialization
@@ -25,6 +27,7 @@ public class UIManager : MonoBehaviour {
 		highscore = PlayerPrefs.GetInt ("Highscore");
 		highscoreText.text = "Legendary numbers: " +highscore.ToString ();
 		InvokeRepeating ("DisplayFPS", 0.1f, 0.5f);
+		StartCoroutine (DisplayWave (1));
 	}
 	
 	// Update is called once per frame
@@ -49,5 +52,23 @@ public class UIManager : MonoBehaviour {
 	public void DisplayScore(){
 		scoreText.text = "Zombies Slayed: " + count.ToString ();
 		highscoreText.text = "Legendary numbers: " +highscore.ToString ();
+	}
+
+	public IEnumerator DisplayWave(int wavenum){
+		yield return new WaitForSeconds (3f);
+		WaveNoText [wavenum - 1].gameObject.SetActive (true);
+		yield return new WaitForSeconds (4f);
+		WaveNoText [wavenum - 1].DOFade (0, 3f).SetEase (Ease.Linear).OnComplete (() => {
+			WaveNoText [wavenum - 1].gameObject.SetActive (false);
+			WaveNoText [wavenum - 1].DOFade (1, 0.1f).SetEase (Ease.Linear);
+		});
+	}
+
+	public void DisplaySurvive(){
+		surviveText.gameObject.SetActive (true);
+		surviveText.DOFade (0, 4f).SetEase (Ease.Linear).OnComplete (() => {
+			surviveText.gameObject.SetActive(false);
+			surviveText.DOFade(1,0.1f).SetEase(Ease.Linear);
+		});
 	}
 }

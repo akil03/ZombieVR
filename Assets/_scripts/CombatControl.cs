@@ -31,7 +31,7 @@ public class CombatControl : MonoBehaviour {
 //		Vector3 fwd = transform.TransformDirection(Vector3.forward);
 //		Debug.DrawRay(transform.position, fwd * 50, Color.green);
 		//Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2, 0));        
-		if (Physics.Raycast(transform.position, transform.forward, out hit, 22f)) {
+		if (Physics.Raycast(transform.position, transform.forward, out hit, 16f)) {
 		
 		//if(Physics.Raycast(ray, out hit,22f)){
 			//Debug.Log ("Collision");
@@ -42,7 +42,7 @@ public class CombatControl : MonoBehaviour {
 					GameObject particle = Instantiate(impactPrefab, hit.point, Quaternion.identity);
 					Destroy(particle, 2f);
 					ZombieBehaviour ZB =  hit.collider.gameObject.GetComponent<ZombieBehaviour> ();
-					ZB.AdjustHealth (33f);
+					ZB.AdjustHealth (50f);
 					StartCoroutine(ShootInterval());
 				}
 
@@ -73,7 +73,7 @@ public class CombatControl : MonoBehaviour {
 					GameObject particle = Instantiate(impactPrefab, hit.point, Quaternion.identity);
 					Destroy(particle, 2f);
 					ZombieBehaviour ZB = hit.collider.gameObject.GetComponentInParent<ZombieBehaviour> ();
-					ZB.AdjustHealth (99f);
+					ZB.AdjustHealth (150f);
 					//_collider = hit.collider.GetComponentInParent<BoxCollider> ();
 					ZB.gameObject.SetActive (false);
 					StartCoroutine(ShootInterval());

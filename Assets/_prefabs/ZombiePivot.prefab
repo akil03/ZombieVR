@@ -1558,7 +1558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4986ef15fdb62460ca7db0ecfae2f37c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveTime: 16
+  moveTime: 0
   ZombieHealth: 99
   _animator: {fileID: 95172526946061304}
   child: {fileID: 1637124280646844}
