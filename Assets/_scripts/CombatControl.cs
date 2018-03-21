@@ -24,6 +24,7 @@ public class CombatControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		GunRay ();
+
 	}
 
 	public void GunRay(){
@@ -31,7 +32,7 @@ public class CombatControl : MonoBehaviour {
 //		Vector3 fwd = transform.TransformDirection(Vector3.forward);
 //		Debug.DrawRay(transform.position, fwd * 50, Color.green);
 		//Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2, 0));        
-		if (Physics.Raycast(transform.position, transform.forward, out hit, 16f)) {
+		if (Physics.Raycast(transform.position, transform.forward, out hit, 14f)) {
 		
 		//if(Physics.Raycast(ray, out hit,22f)){
 			//Debug.Log ("Collision");
@@ -78,6 +79,9 @@ public class CombatControl : MonoBehaviour {
 					ZB.gameObject.SetActive (false);
 					StartCoroutine(ShootInterval());
 				}
+			}
+			if (hit.collider.tag == "Ready") {
+				Debug.Log ("Gazed");
 			}
 		}
 	}

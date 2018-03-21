@@ -7,6 +7,8 @@ public class AudioManager : MonoBehaviour {
 	public List<AudioClip> BGSound;
 	public AudioClip tempClip;
 	bool isStart = true;
+	public AudioClip waveClip;
+	public AudioClip surviveClip;
 
 	public static AudioManager instance;
 //	public List<AudioClip> ReserveSound;
@@ -17,11 +19,14 @@ public class AudioManager : MonoBehaviour {
 
 	void Start () {
 		
-		StartCoroutine(PlaySound());
+		//StartCoroutine(PlaySound());
 	}
 
 	void Update () {
-		
+
+
+
+
 	}
 
 //	public void BGNoises(){
@@ -49,21 +54,36 @@ public class AudioManager : MonoBehaviour {
 //	}
 
 	int index;
-	IEnumerator PlaySound(){
-		if (isStart)
-			yield return new WaitForSeconds (10f);
+	public IEnumerator PlaySound(){
+		yield return new WaitForSeconds (10f);
+		for (int i = 0; i <= 10000; i++) {
+			if(!UIManager.instance.isWave){
+				SoundPlay ();
+				yield return new WaitForSeconds (tempClip.length + 6f);
+			}else
+				yield return new WaitForSeconds (2f);
+		}
+	}
 
+	public void SoundPlay(){
+		index = Random.Range (0, BGSound.Count);
+		GetComponent<AudioSource> ().PlayOneShot (BGSound[index]);
 		while (tempClip != null) {
 			BGSound.Add (tempClip);
 			tempClip = null;
 		}
-		index = Random.Range (0, BGSound.Count);
-		GetComponent<AudioSource> ().PlayOneShot (BGSound[index],0.5f);
 		tempClip = BGSound [index];
 		BGSound.RemoveAt (index);
-		yield return new WaitForSeconds (tempClip.length + 6f);
+
 
 		isStart = false;
-		StartCoroutine (PlaySound ());
+	}
+
+	public void PlayWave(){
+		GetComponent<AudioSource> ().PlayOneShot (waveClip);
+	}
+
+	public void PlaySurvive(){
+		GetComponent<AudioSource> ().PlayOneShot (surviveClip);
 	}
 }

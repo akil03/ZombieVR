@@ -73,7 +73,7 @@ public class ZombieBehaviour : MonoBehaviour {
 			//InvokeRepeating("ShakeCam", 0.01f, 0.8f);
 			if(!isDead){
 				Invoke("GameOver", 4.2f);
-				Invoke("ReloadLevel", 9f);
+				Invoke("ReloadLevel", 30f);
 			}
 		});
 
@@ -103,6 +103,7 @@ public class ZombieBehaviour : MonoBehaviour {
 
 	public void GameOver(){
 		UIManager.instance.gameoverText.gameObject.SetActive (true);
+		UIManager.instance.ReplayButton.SetActive (true);
 		selectedSound = null;
 		SpawnManager.instance.isSpawn = false;
 		SpawnManager.instance.Death ();

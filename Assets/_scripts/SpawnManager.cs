@@ -8,16 +8,19 @@ public class SpawnManager : MonoBehaviour {
 	public GameObject zombiePrefab;
 	public GameObject Clone;
 	public bool isSpawn;
-	int index, oldIndex;
+	public int index, oldIndex;
 	public CameraShake2.Properties prop;
-	public AudioClip deathClip;
 	AudioSource _audiosource;
+	public AudioClip deathClip;
 	public float waitTime = 8f;
 	public float startWait;
 	public int waveNo;
 	public float WaveDuration;
 	public float Timer;
 	public bool isgameOver;
+	public GameObject CameraCon;
+	public GameObject CanvasCon;
+	Vector3 newRotation;
 
 	public static SpawnManager instance;
 	// Use this for initialization
@@ -29,11 +32,11 @@ public class SpawnManager : MonoBehaviour {
 		isgameOver = false;
 	}
 	void Start () {
-		isSpawn = true;
-		oldIndex = index;
-		waitTime = 9;
-		//InvokeRepeating ("SpawnzZombie", 0.5f, 8f);
-		StartCoroutine(SpawnZombie());
+//		isSpawn = true;
+//		oldIndex = index;
+//		waitTime = 9;
+//		//InvokeRepeating ("SpawnzZombie", 0.5f, 8f);
+//		StartCoroutine(SpawnZombie());
 
 	}
 	
@@ -49,6 +52,8 @@ public class SpawnManager : MonoBehaviour {
 				case 2:
 					StopCoroutine (SpawnZombie ());
 					ClearZombies ();
+					//CanvasCon.gameObject.transform.localRotation = CameraCon.gameObject.transform.localRotation;
+					CanvasRotate();
 					UIManager.instance.DisplaySurvive ();
 					UIManager.instance.StartCoroutine (UIManager.instance.DisplayWave (waveNo));
 					waitTime = 8;
@@ -57,6 +62,7 @@ public class SpawnManager : MonoBehaviour {
 				case 3:
 					StopCoroutine (SpawnZombie ());
 					ClearZombies ();
+					CanvasRotate();
 					UIManager.instance.DisplaySurvive ();
 					UIManager.instance.StartCoroutine (UIManager.instance.DisplayWave (waveNo));
 					waitTime = 8;
@@ -65,6 +71,7 @@ public class SpawnManager : MonoBehaviour {
 				case 4:
 					StopCoroutine (SpawnZombie ());
 					ClearZombies ();
+					CanvasRotate();
 					UIManager.instance.DisplaySurvive ();
 					UIManager.instance.StartCoroutine (UIManager.instance.DisplayWave (waveNo));
 					waitTime = 8;
@@ -73,12 +80,18 @@ public class SpawnManager : MonoBehaviour {
 				case 5:
 					StopCoroutine (SpawnZombie ());
 					ClearZombies ();
+					CanvasRotate();
 					UIManager.instance.DisplaySurvive ();
 					UIManager.instance.StartCoroutine (UIManager.instance.DisplayWave (waveNo));
 					waitTime = 8;
 					StartCoroutine (SpawnZombie ());
 					break;
 				default:
+					StopCoroutine (SpawnZombie ());
+					ClearZombies ();
+					newRotation = new Vector3(Mathf.Clamp(CameraCon.transform.eulerAngles.x, 0, 1), CameraCon.transform.eulerAngles.y, CameraCon.transform.eulerAngles.z);
+					CanvasCon.transform.eulerAngles = newRotation;
+					UIManager.instance.DisplaySurvive ();
 					break;
 
 				}
@@ -122,5 +135,10 @@ public class SpawnManager : MonoBehaviour {
 		foreach (GameObject obj in objs) {
 			Destroy (obj);
 		}
+	}
+
+	public void CanvasRotate(){
+		newRotation = new Vector3(Mathf.Clamp(CameraCon.transform.eulerAngles.x, 0, 1), CameraCon.transform.eulerAngles.y, CameraCon.transform.eulerAngles.z);
+		CanvasCon.transform.eulerAngles = newRotation;
 	}
 }
