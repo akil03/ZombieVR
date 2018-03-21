@@ -5,8 +5,6 @@ using UnityEngine;
 public class CombatControl : MonoBehaviour {
 
 	public bool isHit = false;
-	public bool isSecondHit;
-	public bool isThirdHit;
 	RaycastHit hit;
 	public GameObject impactPrefab;
 	//BoxCollider _collider;

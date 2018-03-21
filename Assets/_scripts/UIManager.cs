@@ -14,10 +14,11 @@ public class UIManager : MonoBehaviour {
 	public Text highscoreText;
 	public int highscore;
 	public Text gameoverText;
-	public GameObject ReplayButton;
+	public GameObject[] Button;
 	public Image bloodSplat;
 	public List<Text> WaveNoText;
 	public Text surviveText;
+	public Text winText;
 	public bool isWave;
 
 	public static UIManager instance;
@@ -59,10 +60,10 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public IEnumerator DisplayWave(int wavenum){
-		yield return new WaitForSeconds (3f);
+		yield return new WaitForSeconds (4f);
 		AudioManager.instance.PlayWave ();
 		WaveNoText [wavenum - 1].gameObject.SetActive (true);
-		yield return new WaitForSeconds (4f);
+		yield return new WaitForSeconds (2f);
 		WaveNoText [wavenum - 1].DOFade (0, 3f).SetEase (Ease.Linear).OnComplete (() => {
 			WaveNoText [wavenum - 1].gameObject.SetActive (false);
 			WaveNoText [wavenum - 1].DOFade (1, 0.1f).SetEase (Ease.Linear);
@@ -74,19 +75,29 @@ public class UIManager : MonoBehaviour {
 		isWave = true;
 		AudioManager.instance.PlaySurvive ();
 		surviveText.gameObject.SetActive (true);
-		surviveText.DOFade (0, 4f).SetEase (Ease.Linear).OnComplete (() => {
+		surviveText.DOFade (0, 3f).SetEase (Ease.Linear).OnComplete (() => {
 			surviveText.gameObject.SetActive(false);
 			surviveText.DOFade(1,0.1f).SetEase(Ease.Linear);
 		});
 	}
 
+	public IEnumerator DisplayWin(){
+		isWave = true;
+		yield return new WaitForSeconds (4f);
+		AudioManager.instance.PlaySurvive ();
+		winText.gameObject.SetActive (true);
+	}
+
 	public void StartGame(){
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
+		SpawnManager.instance.isgameOver = false;
 		highscore = PlayerPrefs.GetInt ("Highscore");
 		highscoreText.text = "Legendary numbers: " +highscore.ToString ();
 		scoreText.gameObject.SetActive (true);
 		highscoreText.gameObject.SetActive (true);
 		InvokeRepeating ("DisplayFPS", 0.1f, 0.5f);
+		Button [0].SetActive (false);
+		Button [1].SetActive (false);
 		SpawnManager.instance.CanvasRotate ();
 		StartCoroutine (DisplayWave (1));
 		StartCoroutine (AudioManager.instance.PlaySound ());
@@ -102,5 +113,6 @@ public class UIManager : MonoBehaviour {
 
 	public void RunAway(){
 		Application.Quit ();
+		print ("quit");
 	}
 }

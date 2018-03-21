@@ -62,7 +62,7 @@ public class ZombieBehaviour : MonoBehaviour {
 		isAttack = false;
 		isDead = false;
 		selectedSound = moveSound;
-		moveTime = 20f - (SpawnManager.instance.waveNo * 2);
+		moveTime = 22f - (SpawnManager.instance.waveNo * 2);
 		transform.DOMove (Camera.main.transform.position, moveTime, false).SetEase(Ease.Linear).OnComplete (() => {
 			isAttack = true;
 			Attack();
@@ -73,7 +73,7 @@ public class ZombieBehaviour : MonoBehaviour {
 			//InvokeRepeating("ShakeCam", 0.01f, 0.8f);
 			if(!isDead){
 				Invoke("GameOver", 4.2f);
-				Invoke("ReloadLevel", 30f);
+				//Invoke("ReloadLevel", 30f);
 			}
 		});
 
@@ -102,8 +102,9 @@ public class ZombieBehaviour : MonoBehaviour {
 	}
 
 	public void GameOver(){
+		SpawnManager.instance.CanvasRotate ();
 		UIManager.instance.gameoverText.gameObject.SetActive (true);
-		UIManager.instance.ReplayButton.SetActive (true);
+		UIManager.instance.Button[2].SetActive (true);
 		selectedSound = null;
 		SpawnManager.instance.isSpawn = false;
 		SpawnManager.instance.Death ();

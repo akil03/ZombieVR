@@ -28,10 +28,10 @@ public class SpawnManager : MonoBehaviour {
 		_audiosource = GetComponent<AudioSource> ();
 		instance = this;
 		waveNo = 1;
-		WaveDuration = 57f;
-		isgameOver = false;
+		WaveDuration = 60f;
 	}
 	void Start () {
+		isgameOver = true;
 //		isSpawn = true;
 //		oldIndex = index;
 //		waitTime = 9;
@@ -65,7 +65,7 @@ public class SpawnManager : MonoBehaviour {
 					CanvasRotate();
 					UIManager.instance.DisplaySurvive ();
 					UIManager.instance.StartCoroutine (UIManager.instance.DisplayWave (waveNo));
-					waitTime = 8;
+					waitTime = 7;
 					StartCoroutine (SpawnZombie ());
 					break;
 				case 4:
@@ -74,7 +74,7 @@ public class SpawnManager : MonoBehaviour {
 					CanvasRotate();
 					UIManager.instance.DisplaySurvive ();
 					UIManager.instance.StartCoroutine (UIManager.instance.DisplayWave (waveNo));
-					waitTime = 8;
+					waitTime = 6;
 					StartCoroutine (SpawnZombie ());
 					break;
 				case 5:
@@ -83,20 +83,21 @@ public class SpawnManager : MonoBehaviour {
 					CanvasRotate();
 					UIManager.instance.DisplaySurvive ();
 					UIManager.instance.StartCoroutine (UIManager.instance.DisplayWave (waveNo));
-					waitTime = 8;
+					waitTime = 5;
 					StartCoroutine (SpawnZombie ());
 					break;
 				default:
 					StopCoroutine (SpawnZombie ());
 					ClearZombies ();
-					newRotation = new Vector3(Mathf.Clamp(CameraCon.transform.eulerAngles.x, 0, 1), CameraCon.transform.eulerAngles.y, CameraCon.transform.eulerAngles.z);
+					newRotation = new Vector3 (Mathf.Clamp (CameraCon.transform.eulerAngles.x, 0, 1), CameraCon.transform.eulerAngles.y, CameraCon.transform.eulerAngles.z);
 					CanvasCon.transform.eulerAngles = newRotation;
 					UIManager.instance.DisplaySurvive ();
+					UIManager.instance.StartCoroutine (UIManager.instance.DisplayWin ());
 					break;
 
 				}
 				Timer = 0f;
-				WaveDuration = Time.deltaTime + 57f;
+				WaveDuration = Time.deltaTime + 60f;
 			}
 		}
 	}

@@ -6,7 +6,6 @@ public class AudioManager : MonoBehaviour {
 
 	public List<AudioClip> BGSound;
 	public AudioClip tempClip;
-	bool isStart = true;
 	public AudioClip waveClip;
 	public AudioClip surviveClip;
 
@@ -74,9 +73,6 @@ public class AudioManager : MonoBehaviour {
 		}
 		tempClip = BGSound [index];
 		BGSound.RemoveAt (index);
-
-
-		isStart = false;
 	}
 
 	public void PlayWave(){
