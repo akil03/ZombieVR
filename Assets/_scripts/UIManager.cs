@@ -7,7 +7,7 @@ using DG.Tweening;
 
 public class UIManager : MonoBehaviour {
 
-	public Text fpsText;
+	//public Text fpsText;
 	float fps;
 	public Text scoreText;
 	public int count= 0;
@@ -20,6 +20,8 @@ public class UIManager : MonoBehaviour {
 	public Text surviveText;
 	public Text winText;
 	public bool isWave;
+	public Image FillImage;
+	bool isFade;
 
 	public static UIManager instance;
 	// Use this for initialization
@@ -33,6 +35,8 @@ public class UIManager : MonoBehaviour {
 //		highscoreText.text = "Legendary numbers: " +highscore.ToString ();
 //		InvokeRepeating ("DisplayFPS", 0.1f, 0.5f);
 //		StartCoroutine (DisplayWave (1));
+		isFade = false;
+		//PlayerPrefs.SetInt ("Highscore", 0);
 	}
 	
 	// Update is called once per frame
@@ -44,19 +48,30 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void DisplayFPS(){
-		fpsText.text = " " + fps.ToString ();
+		//fpsText.text = " " + fps.ToString ();
 	}
 
 	public void CalcScore(){
 		if (count > highscore) {
 			highscore = count;
 			PlayerPrefs.SetInt ("Highscore", highscore);
+			if (!isFade) {
+				highscoreText.DOFade (0, 0.8f).OnComplete (() => {
+					highscoreText.DOFade (1, 0.8f).OnComplete (() => {
+						highscoreText.DOFade (0, 0.8f).OnComplete (() => {
+							highscoreText.DOFade (1, 0.8f).OnComplete (() => {
+								isFade = true;
+							});
+						});
+					});
+				});
+			}
 		}
 	}
 
 	public void DisplayScore(){
-		scoreText.text = "Zombies Slayed: " + count.ToString ();
-		highscoreText.text = "Legendary numbers: " +highscore.ToString ();
+		scoreText.text = "Slayed: " + count.ToString ();
+		highscoreText.text = "Annihilated: " +highscore.ToString ();
 	}
 
 	public IEnumerator DisplayWave(int wavenum){
@@ -68,6 +83,7 @@ public class UIManager : MonoBehaviour {
 			WaveNoText [wavenum - 1].gameObject.SetActive (false);
 			WaveNoText [wavenum - 1].DOFade (1, 0.1f).SetEase (Ease.Linear);
 			isWave = false;
+			SpawnManager.instance.isSpawn = true;
 		});
 	}
 
@@ -83,9 +99,28 @@ public class UIManager : MonoBehaviour {
 
 	public IEnumerator DisplayWin(){
 		isWave = true;
+		SpawnManager.instance.isSpawn = false;
+		SpawnManager.instance.isgameOver = true;
+		GameObject[] objs = GameObject.FindGameObjectsWithTag ("Zombie");
+		foreach (GameObject obj in objs) {
+			DOTween.KillAll ();
+			obj.SetActive (false);
+		}
 		yield return new WaitForSeconds (4f);
 		AudioManager.instance.PlaySurvive ();
 		winText.gameObject.SetActive (true);
+		Button [2].SetActive (true);
+	}
+
+	public void ImageFill(){
+		FillImage.gameObject.SetActive (true);
+		FillImage.DOFillAmount (0, 3f);
+	}
+
+	public void ImageReverseFill(){
+		DOTween.Kill (FillImage);
+		FillImage.gameObject.SetActive (false);
+		FillImage.DOFillAmount (1, 0.1f);
 	}
 
 	public void StartGame(){
@@ -95,7 +130,7 @@ public class UIManager : MonoBehaviour {
 		highscoreText.text = "Legendary numbers: " +highscore.ToString ();
 		scoreText.gameObject.SetActive (true);
 		highscoreText.gameObject.SetActive (true);
-		InvokeRepeating ("DisplayFPS", 0.1f, 0.5f);
+		//InvokeRepeating ("DisplayFPS", 0.1f, 0.5f);
 		Button [0].SetActive (false);
 		Button [1].SetActive (false);
 		SpawnManager.instance.CanvasRotate ();
@@ -104,7 +139,8 @@ public class UIManager : MonoBehaviour {
 		SpawnManager.instance.isSpawn = true;
 		SpawnManager.instance.oldIndex = SpawnManager.instance.index;
 		SpawnManager.instance.waitTime = 9;
-		StartCoroutine(SpawnManager.instance.SpawnZombie());
+		SpawnManager.instance.StartSpawn ();
+		//SpawnManager.instance.StartCoroutine(SpawnManager.instance.SpawnZombie());
 	}
 
 	public void Replay(){

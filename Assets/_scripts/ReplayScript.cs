@@ -10,7 +10,8 @@ public class ReplayScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
 	public void OnPointerEnter (PointerEventData eventData)
 	{
-		UIManager.instance.Invoke ("Replay", 5f);
+		UIManager.instance.ImageFill ();
+		UIManager.instance.Invoke ("Replay", 3f);
 	}
 
 	#endregion
@@ -19,6 +20,7 @@ public class ReplayScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
 	public void OnPointerExit (PointerEventData eventData)
 	{
+		UIManager.instance.ImageReverseFill ();
 		UIManager.instance.CancelInvoke ("Replay");
 	}
 

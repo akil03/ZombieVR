@@ -28,7 +28,7 @@ public class SpawnManager : MonoBehaviour {
 		_audiosource = GetComponent<AudioSource> ();
 		instance = this;
 		waveNo = 1;
-		WaveDuration = 60f;
+		WaveDuration = 90f;
 	}
 	void Start () {
 		isgameOver = true;
@@ -37,7 +37,6 @@ public class SpawnManager : MonoBehaviour {
 //		waitTime = 9;
 //		//InvokeRepeating ("SpawnzZombie", 0.5f, 8f);
 //		StartCoroutine(SpawnZombie());
-
 	}
 	
 	// Update is called once per frame
@@ -51,6 +50,7 @@ public class SpawnManager : MonoBehaviour {
 					break;
 				case 2:
 					StopCoroutine (SpawnZombie ());
+					isSpawn = false;
 					ClearZombies ();
 					//CanvasCon.gameObject.transform.localRotation = CameraCon.gameObject.transform.localRotation;
 					CanvasRotate();
@@ -61,6 +61,7 @@ public class SpawnManager : MonoBehaviour {
 					break;
 				case 3:
 					StopCoroutine (SpawnZombie ());
+					isSpawn = false;
 					ClearZombies ();
 					CanvasRotate();
 					UIManager.instance.DisplaySurvive ();
@@ -70,6 +71,7 @@ public class SpawnManager : MonoBehaviour {
 					break;
 				case 4:
 					StopCoroutine (SpawnZombie ());
+					isSpawn = false;
 					ClearZombies ();
 					CanvasRotate();
 					UIManager.instance.DisplaySurvive ();
@@ -79,6 +81,7 @@ public class SpawnManager : MonoBehaviour {
 					break;
 				case 5:
 					StopCoroutine (SpawnZombie ());
+					isSpawn = false;
 					ClearZombies ();
 					CanvasRotate();
 					UIManager.instance.DisplaySurvive ();
@@ -88,6 +91,7 @@ public class SpawnManager : MonoBehaviour {
 					break;
 				default:
 					StopCoroutine (SpawnZombie ());
+					isSpawn = false;
 					ClearZombies ();
 					newRotation = new Vector3 (Mathf.Clamp (CameraCon.transform.eulerAngles.x, 0, 1), CameraCon.transform.eulerAngles.y, CameraCon.transform.eulerAngles.z);
 					CanvasCon.transform.eulerAngles = newRotation;
@@ -97,26 +101,23 @@ public class SpawnManager : MonoBehaviour {
 
 				}
 				Timer = 0f;
-				WaveDuration = Time.deltaTime + 60f;
+				WaveDuration = Time.deltaTime + 90f;
 			}
 		}
 	}
 
 	public void SpawnzZombie(){
-		if (isSpawn) {
+		index = Random.Range (0, spawnPoint.Length);
+		while (index == oldIndex) {
 			index = Random.Range (0, spawnPoint.Length);
-			while (index == oldIndex) {
-				index = Random.Range (0, spawnPoint.Length);
-			}
-			
-			Clone = Instantiate (zombiePrefab, spawnPoint [index]);
-			Clone.gameObject.transform.localPosition = spawnPoint [index].transform.position;
-			Clone.gameObject.transform.localRotation = Quaternion.identity;
-			Clone.transform.SetParent (null);
-
-			oldIndex = index;
-			isSpawn = true;
 		}
+		
+		Clone = Instantiate (zombiePrefab, spawnPoint [index]);
+		Clone.gameObject.transform.localPosition = spawnPoint [index].transform.position;
+		Clone.gameObject.transform.localRotation = Quaternion.identity;
+		Clone.transform.SetParent (null);
+
+		oldIndex = index;
 	}
 
 	public void Death(){
@@ -125,7 +126,11 @@ public class SpawnManager : MonoBehaviour {
 
 	public IEnumerator SpawnZombie(){
 		yield return new WaitForSeconds (startWait);
-		for (int i = 0; i <= 1000; i++) {
+//		for (int i = 0; i <= 10000; i++) {
+//			SpawnzZombie ();
+//			yield return new WaitForSeconds (waitTime);
+//		}
+		while(isSpawn){
 			SpawnzZombie ();
 			yield return new WaitForSeconds (waitTime);
 		}
@@ -141,5 +146,9 @@ public class SpawnManager : MonoBehaviour {
 	public void CanvasRotate(){
 		newRotation = new Vector3(Mathf.Clamp(CameraCon.transform.eulerAngles.x, 0, 1), CameraCon.transform.eulerAngles.y, CameraCon.transform.eulerAngles.z);
 		CanvasCon.transform.eulerAngles = newRotation;
+	}
+
+	public void StartSpawn(){
+		StartCoroutine (SpawnZombie ());
 	}
 }

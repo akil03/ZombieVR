@@ -11,7 +11,8 @@ public class ReadyScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
 	public void OnPointerEnter (PointerEventData eventData)
 	{
-		UIManager.instance.Invoke ("StartGame", 5f);
+		UIManager.instance.ImageFill ();
+		UIManager.instance.Invoke ("StartGame", 3f);
 	}
 
 	#endregion
@@ -19,6 +20,7 @@ public class ReadyScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 	#region IPointerExitHandler implementation
 	public void OnPointerExit (PointerEventData eventData)
 	{
+		UIManager.instance.ImageReverseFill ();
 		UIManager.instance.CancelInvoke ("StartGame");
 	}
 	#endregion

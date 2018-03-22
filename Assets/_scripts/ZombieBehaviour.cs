@@ -62,7 +62,8 @@ public class ZombieBehaviour : MonoBehaviour {
 		isAttack = false;
 		isDead = false;
 		selectedSound = moveSound;
-		moveTime = 22f - (SpawnManager.instance.waveNo * 2);
+		//moveTime = 22f - (SpawnManager.instance.waveNo * 2);
+		moveTime = 17f;
 		transform.DOMove (Camera.main.transform.position, moveTime, false).SetEase(Ease.Linear).OnComplete (() => {
 			isAttack = true;
 			Attack();
@@ -91,7 +92,12 @@ public class ZombieBehaviour : MonoBehaviour {
 			UIManager.instance.bloodSplat.gameObject.SetActive(false);
 			UIManager.instance.count++;
 			child.transform.SetParent (null);
-			CombatControl.instance.DestroyEnemy ();
+			if (!CombatControl.instance.isHeadShot) {
+				CombatControl.instance.DestroyEnemy ();
+			} else {
+				Destroy (transform.gameObject);
+
+			}
 			Destroy (child, 2f);
 			//CameraShake.instance.shakeDuration = 0f;
 		}
@@ -105,6 +111,7 @@ public class ZombieBehaviour : MonoBehaviour {
 		SpawnManager.instance.CanvasRotate ();
 		UIManager.instance.gameoverText.gameObject.SetActive (true);
 		UIManager.instance.Button[2].SetActive (true);
+		UIManager.instance.isWave = true;
 		selectedSound = null;
 		SpawnManager.instance.isSpawn = false;
 		SpawnManager.instance.Death ();

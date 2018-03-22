@@ -10,7 +10,8 @@ public class RunAwayScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
 	public void OnPointerEnter (PointerEventData eventData)
 	{
-		UIManager.instance.Invoke ("RunAway", 5f);
+		UIManager.instance.ImageFill ();
+		UIManager.instance.Invoke ("RunAway", 3f);
 	}
 
 	#endregion
@@ -19,6 +20,7 @@ public class RunAwayScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
 	public void OnPointerExit (PointerEventData eventData)
 	{
+		UIManager.instance.ImageReverseFill ();
 		UIManager.instance.CancelInvoke ("RunAway");
 	}
 
