@@ -5,10 +5,13 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour {
 
 	public Transform[] spawnPoint;
-	public GameObject zombiePrefab;
+	public GameObject[] zombiePrefab;
+	public GameObject selectedPrefab;
 	public GameObject Clone;
 	public bool isSpawn;
 	public int index, oldIndex;
+	int oldzombieIndex;
+	int zombieIndex;
 	public CameraShake2.Properties prop;
 	AudioSource _audiosource;
 	public AudioClip deathClip;
@@ -32,6 +35,7 @@ public class SpawnManager : MonoBehaviour {
 	}
 	void Start () {
 		isgameOver = true;
+		oldzombieIndex = zombieIndex;
 //		isSpawn = true;
 //		oldIndex = index;
 //		waitTime = 9;
@@ -112,7 +116,7 @@ public class SpawnManager : MonoBehaviour {
 			index = Random.Range (0, spawnPoint.Length);
 		}
 		
-		Clone = Instantiate (zombiePrefab, spawnPoint [index]);
+		Clone = Instantiate (selectedPrefab, spawnPoint [index]);
 		Clone.gameObject.transform.localPosition = spawnPoint [index].transform.position;
 		Clone.gameObject.transform.localRotation = Quaternion.identity;
 		Clone.transform.SetParent (null);
@@ -131,6 +135,7 @@ public class SpawnManager : MonoBehaviour {
 //			yield return new WaitForSeconds (waitTime);
 //		}
 		while(isSpawn){
+			SelectZombie ();
 			SpawnzZombie ();
 			yield return new WaitForSeconds (waitTime);
 		}
@@ -150,5 +155,14 @@ public class SpawnManager : MonoBehaviour {
 
 	public void StartSpawn(){
 		StartCoroutine (SpawnZombie ());
+	}
+
+	public void SelectZombie(){
+		zombieIndex = Random.Range (0, zombiePrefab.Length);
+		while (zombieIndex == oldzombieIndex) {
+			zombieIndex = Random.Range (0, zombiePrefab.Length);
+		}
+		selectedPrefab = zombiePrefab [zombieIndex];
+		oldzombieIndex = zombieIndex;
 	}
 }

@@ -98,7 +98,7 @@ public class ZombieBehaviour : MonoBehaviour {
 				Destroy (transform.gameObject);
 
 			}
-			Destroy (child, 2f);
+			Destroy (child, 3f);
 			//CameraShake.instance.shakeDuration = 0f;
 		}
 	}
@@ -138,9 +138,7 @@ public class ZombieBehaviour : MonoBehaviour {
 	public void Attack(){
 		if (!isDead) {
 			Invoke ("LateAtkDisplay", 0.3f);
-			_animator.SetInteger ("Attackparam", 1);
-			_animator.Play ("Attack");
-			Invoke ("Breather", 1.5f);
+			_animator.Play ("Slap");
 			Invoke ("Attack", 2f);
 		}
 	}
@@ -153,10 +151,6 @@ public class ZombieBehaviour : MonoBehaviour {
 				UIManager.instance.bloodSplat.DOFade (1, 0.01f);
 			});
 		}
-	}
-
-	public void Breather(){
-		_animator.SetInteger ("Attackparam", 0);
 	}
 
 //	public void ShakeCam(){

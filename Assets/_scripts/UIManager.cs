@@ -114,13 +114,15 @@ public class UIManager : MonoBehaviour {
 
 	public void ImageFill(){
 		FillImage.gameObject.SetActive (true);
-		FillImage.DOFillAmount (0, 3f);
+		FillImage.DOFillAmount (1, 3f).OnComplete (() => {
+			FillImage.gameObject.SetActive (false);
+		});
 	}
 
 	public void ImageReverseFill(){
 		DOTween.Kill (FillImage);
 		FillImage.gameObject.SetActive (false);
-		FillImage.DOFillAmount (1, 0.1f);
+		FillImage.DOFillAmount (0, 0.1f);
 	}
 
 	public void StartGame(){

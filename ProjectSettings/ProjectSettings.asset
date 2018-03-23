@@ -158,7 +158,8 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.joejoe.zombievr
+    Android: com.gu.aoz
+    iOS: com.gu.aoz
   buildNumber: {}
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 19
