@@ -39,11 +39,12 @@ public class CombatControl : MonoBehaviour {
 				if (!isHit) {
 					isHit = true;
 					isHeadShot = false;
+					StartCoroutine(ShootInterval());
 					GameObject particle = Instantiate(impactPrefab, hit.point, Quaternion.identity);
 					Destroy(particle, 2f);
 					ZombieBehaviour ZB =  hit.collider.gameObject.GetComponent<ZombieBehaviour> ();
 					ZB.AdjustHealth (50f);
-					StartCoroutine(ShootInterval());
+
 				}
 
 //				if (isHit && !isSecondHit) {
@@ -71,13 +72,14 @@ public class CombatControl : MonoBehaviour {
 				if (!isHit) {
 					isHit = true;
 					isHeadShot = true;
+					StartCoroutine(ShootInterval());
 					GameObject particle = Instantiate(impactPrefab, hit.point, Quaternion.identity);
 					Destroy(particle, 2f);
 					ZombieBehaviour ZB = hit.collider.gameObject.GetComponentInParent<ZombieBehaviour> ();
-					ZB.AdjustHealth (150f);
+					ZB.AdjustHealth (400f);
 					//_collider = hit.collider.GetComponentInParent<BoxCollider> ();
 					//ZB.gameObject.SetActive (false);
-					StartCoroutine(ShootInterval());
+
 				}
 			}
 		}
@@ -93,6 +95,7 @@ public class CombatControl : MonoBehaviour {
 	}
 
 	public IEnumerator ShootInterval(){
+		yield return new WaitForSeconds (0.2f);
 		GunMechanics.instance.Shoot ();
 		yield return new WaitForSeconds (1f);
 		isHit = false;

@@ -12,7 +12,7 @@ public class ReadyScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 	public void OnPointerEnter (PointerEventData eventData)
 	{
 		UIManager.instance.ImageFill ();
-		UIManager.instance.Invoke ("StartGame", 3f);
+		UIManager.instance.Invoke ("StartGame", 2.5f);
 	}
 
 	#endregion

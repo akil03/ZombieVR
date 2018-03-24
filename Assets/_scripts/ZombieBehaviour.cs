@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
@@ -34,6 +35,21 @@ public class ZombieBehaviour : MonoBehaviour {
 		case 5:
 			ZombieHealth = 250f;
 			break;
+		case 6:
+			ZombieHealth = 300f;
+			break;
+		case 7:
+			ZombieHealth = 350f;
+			break;
+		case 8:
+			ZombieHealth = 400f;
+			break;
+		case 9:
+			ZombieHealth = 450f;
+			break;
+		case 10:
+			ZombieHealth = 500f;
+			break;
 		default:
 			break;
 
@@ -47,7 +63,7 @@ public class ZombieBehaviour : MonoBehaviour {
 		//CameraShake2.instance.StartShake(SpawnManager.instance.prop);
 		Invoke("PlaySound",3);
 		Movement ();
-		Destroy (gameObject, 40f);
+		Destroy (gameObject, 90f);
 
 		//moveSpeed = Random.Range (0.1f, 1.3f);
 	}
@@ -63,7 +79,7 @@ public class ZombieBehaviour : MonoBehaviour {
 		isDead = false;
 		selectedSound = moveSound;
 		//moveTime = 22f - (SpawnManager.instance.waveNo * 2);
-		moveTime = 17f;
+		moveTime = 14f;
 		transform.DOMove (Camera.main.transform.position, moveTime, false).SetEase(Ease.Linear).OnComplete (() => {
 			isAttack = true;
 			Attack();
@@ -98,7 +114,7 @@ public class ZombieBehaviour : MonoBehaviour {
 				Destroy (transform.gameObject);
 
 			}
-			Destroy (child, 3f);
+			Destroy (child, 4f);
 			//CameraShake.instance.shakeDuration = 0f;
 		}
 	}
@@ -138,7 +154,9 @@ public class ZombieBehaviour : MonoBehaviour {
 	public void Attack(){
 		if (!isDead) {
 			Invoke ("LateAtkDisplay", 0.3f);
-			_animator.Play ("Slap");
+			AnimationStates states;
+			states = (AnimationStates)Random.Range(0, System.Enum.GetValues(typeof(AnimationStates)).Length);
+			_animator.Play (states.ToString());
 			Invoke ("Attack", 2f);
 		}
 	}
@@ -157,4 +175,8 @@ public class ZombieBehaviour : MonoBehaviour {
 //		CameraShake.instance.shakeDuration = 10f;
 //		CameraShake.instance.Shake();
 //	}
+
+	public enum AnimationStates{
+		Slap, NeckBite
+	}
 }

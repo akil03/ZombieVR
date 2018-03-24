@@ -11,7 +11,7 @@ public class ReplayScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 	public void OnPointerEnter (PointerEventData eventData)
 	{
 		UIManager.instance.ImageFill ();
-		UIManager.instance.Invoke ("Replay", 3f);
+		UIManager.instance.Invoke ("Replay", 2.5f);
 	}
 
 	#endregion

@@ -15,7 +15,7 @@ public class SpawnManager : MonoBehaviour {
 	public CameraShake2.Properties prop;
 	AudioSource _audiosource;
 	public AudioClip deathClip;
-	public float waitTime = 8f;
+	public float waitTime;
 	public float startWait;
 	public int waveNo;
 	public float WaveDuration;
@@ -93,13 +93,62 @@ public class SpawnManager : MonoBehaviour {
 					waitTime = 5;
 					StartCoroutine (SpawnZombie ());
 					break;
+				case 6:
+					StopCoroutine (SpawnZombie ());
+					isSpawn = false;
+					ClearZombies ();
+					CanvasRotate();
+					UIManager.instance.DisplaySurvive ();
+					UIManager.instance.StartCoroutine (UIManager.instance.DisplayWave (waveNo));
+					waitTime = 4;
+					StartCoroutine (SpawnZombie ());
+					break;
+				case 7:
+					StopCoroutine (SpawnZombie ());
+					isSpawn = false;
+					ClearZombies ();
+					CanvasRotate();
+					UIManager.instance.DisplaySurvive ();
+					UIManager.instance.StartCoroutine (UIManager.instance.DisplayWave (waveNo));
+					waitTime = 3;
+					StartCoroutine (SpawnZombie ());
+					break;
+				case 8:
+					StopCoroutine (SpawnZombie ());
+					isSpawn = false;
+					ClearZombies ();
+					CanvasRotate();
+					UIManager.instance.DisplaySurvive ();
+					UIManager.instance.StartCoroutine (UIManager.instance.DisplayWave (waveNo));
+					waitTime = 2;
+					StartCoroutine (SpawnZombie ());
+					break;
+				case 9:
+					StopCoroutine (SpawnZombie ());
+					isSpawn = false;
+					ClearZombies ();
+					CanvasRotate();
+					UIManager.instance.DisplaySurvive ();
+					UIManager.instance.StartCoroutine (UIManager.instance.DisplayWave (waveNo));
+					waitTime = 2;
+					StartCoroutine (SpawnZombie ());
+					break;
+				case 10:
+					StopCoroutine (SpawnZombie ());
+					isSpawn = false;
+					ClearZombies ();
+					CanvasRotate();
+					UIManager.instance.DisplaySurvive ();
+					UIManager.instance.StartCoroutine (UIManager.instance.DisplayWave (waveNo));
+					waitTime = 1;
+					StartCoroutine (SpawnZombie ());
+					break;
 				default:
 					StopCoroutine (SpawnZombie ());
 					isSpawn = false;
 					ClearZombies ();
-					newRotation = new Vector3 (Mathf.Clamp (CameraCon.transform.eulerAngles.x, 0, 1), CameraCon.transform.eulerAngles.y, CameraCon.transform.eulerAngles.z);
-					CanvasCon.transform.eulerAngles = newRotation;
-					UIManager.instance.DisplaySurvive ();
+					CanvasRotate ();
+					//UIManager.instance.DisplaySurvive ();
 					UIManager.instance.StartCoroutine (UIManager.instance.DisplayWin ());
 					break;
 

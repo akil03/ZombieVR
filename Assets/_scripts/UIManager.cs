@@ -116,6 +116,7 @@ public class UIManager : MonoBehaviour {
 		FillImage.gameObject.SetActive (true);
 		FillImage.DOFillAmount (1, 3f).OnComplete (() => {
 			FillImage.gameObject.SetActive (false);
+			FillImage.DOFillAmount (0, 0.1f);
 		});
 	}
 

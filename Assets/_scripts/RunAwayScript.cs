@@ -11,7 +11,7 @@ public class RunAwayScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 	public void OnPointerEnter (PointerEventData eventData)
 	{
 		UIManager.instance.ImageFill ();
-		UIManager.instance.Invoke ("RunAway", 3f);
+		UIManager.instance.Invoke ("RunAway", 2.5f);
 	}
 
 	#endregion
