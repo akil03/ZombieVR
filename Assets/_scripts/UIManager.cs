@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.VR;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 
@@ -22,10 +23,16 @@ public class UIManager : MonoBehaviour {
 	public bool isWave;
 	public Image FillImage;
 	bool isFade;
+	public Image startImage;
+	public GameObject maincam;
+	public Slider startSlider;
 
 	public static UIManager instance;
 	// Use this for initialization
 	void Awake(){
+		UnityEngine.XR.XRSettings.enabled = false;
+		startImage.gameObject.SetActive (true);
+		//Time.timeScale = 0f;
 		instance = this;
 		isWave = false;
 	}
@@ -41,6 +48,12 @@ public class UIManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		if (startSlider.value == 0f) {
+			NormalMode ();
+		} else {
+			VRMode ();
+		}
 		fps = 1.0f / Time.deltaTime;
 		CalcScore ();
 		DisplayScore ();
@@ -124,6 +137,21 @@ public class UIManager : MonoBehaviour {
 		DOTween.Kill (FillImage);
 		FillImage.gameObject.SetActive (false);
 		FillImage.DOFillAmount (0, 0.1f);
+	}
+
+	public void GoButton(){
+		Time.timeScale = 1f;
+		startImage.gameObject.SetActive (false);
+	}
+
+	public void NormalMode(){
+		UnityEngine.XR.XRSettings.enabled = false;
+		maincam.GetComponent<GyroController> ().enabled = true;
+	}
+
+	public void VRMode(){
+		UnityEngine.XR.XRSettings.enabled = true;
+		maincam.GetComponent<GyroController> ().enabled = false;
 	}
 
 	public void StartGame(){
